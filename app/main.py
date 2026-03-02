@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 
 from .config import Settings, get_settings
@@ -16,6 +16,78 @@ app = FastAPI(
     version="0.1.0",
     description="Small helper service exposing UniFi diagnostics over HTTP.",
 )
+
+
+@app.get("/", response_class=HTMLResponse)
+def index() -> str:
+    return """
+    <html>
+      <head>
+        <title>Network Commander - UniFi Diagnostics</title>
+        <style>
+          body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+          }
+          .card {
+            background: #020617;
+            border-radius: 1rem;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 25px 50px -12px rgb(15 23 42 / 0.8);
+            max-width: 640px;
+            width: 100%;
+          }
+          h1 {
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem;
+          }
+          p {
+            margin: 0.25rem 0 1rem;
+            color: #9ca3af;
+          }
+          code {
+            background: #020617;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+          }
+          a {
+            color: #38bdf8;
+            text-decoration: none;
+          }
+          a:hover {
+            text-decoration: underline;
+          }
+          ul {
+            padding-left: 1.25rem;
+            margin: 0.5rem 0 0;
+          }
+          li {
+            margin: 0.15rem 0;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1>Network Commander is running ✅</h1>
+          <p>Your UniFi diagnostics service is up. Try these endpoints:</p>
+          <ul>
+            <li><a href="/docs"><code>/docs</code></a> – Interactive API docs</li>
+            <li><a href="/health"><code>/health</code></a> – Controller + site health</li>
+            <li><a href="/diagnostics/summary"><code>/diagnostics/summary</code></a> – High-level summary</li>
+            <li><a href="/diagnostics/clients"><code>/diagnostics/clients</code></a> – Connected clients</li>
+            <li><a href="/diagnostics/vlans"><code>/diagnostics/vlans</code></a> – VLAN / network config</li>
+          </ul>
+        </div>
+      </body>
+    </html>
+    """
 
 
 def get_service() -> UnifiDiagnosticsService:

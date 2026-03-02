@@ -36,9 +36,11 @@ __pycache__/
 *.pyd
 
 # Distribution / packaging
+*.egg
 *.egg-info/
 dist/
 build/
+eggs/
 
 
 # ---------------------
@@ -58,6 +60,8 @@ htmlcov/
 # ---------------------
 .mypy_cache/
 .ruff_cache/
+.pytype/
+.bandit_cache/
 .cache/
 
 
@@ -78,7 +82,24 @@ htmlcov/
 *.log
 *.pid
 *.dump
+pip-log.txt
+pip-delete-this-directory.txt
 
+
+# ---------------------
+# Notebooks / misc
+# ---------------------
+.ipynb_checkpoints/
+*.bak
+*.tmp
+*.temp
+*.orig
+
+# ---------------------
+# Docker (local overrides with secrets)
+# ---------------------
+docker-compose.override.yml
+docker-compose.*.local
 
 # ---------------------
 # OS junk
