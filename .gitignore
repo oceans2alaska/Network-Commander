@@ -1,0 +1,89 @@
+# =============================================================================
+# .gitignore tells Git which files/folders to NEVER track.
+#
+# IMPORTANT:
+#   .gitignore only prevents NEW files from being tracked. If a file is already
+#   committed, you must also untrack it:
+#       git rm --cached <file>
+#   Then commit that removal. The file stays on disk but Git stops tracking it.
+# =============================================================================
+
+
+# ---------------------
+# Environment / secrets
+# ---------------------
+# NEVER commit credentials, tokens, or connection strings.
+# Use .env.example (with placeholder values) to document required variables.
+.env
+.env.*
+!.env.example
+.envrc
+
+
+# ---------------------
+# Python
+# ---------------------
+# Virtual environments — these are large, platform-specific, and reproducible
+# from requirements.txt. Every developer creates their own.
+.venv/
+venv/
+env/
+
+# Bytecode cache — generated automatically by Python at runtime.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+
+# ---------------------
+# Testing / coverage
+# ---------------------
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+.nox/
+.tox/
+
+
+# ---------------------
+# Tooling caches
+# ---------------------
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+
+# ---------------------
+# IDE / editor files
+# ---------------------
+# These are personal preferences and don't belong in the repo.
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+
+# ---------------------
+# Logs / runtime
+# ---------------------
+*.log
+*.pid
+*.dump
+
+
+# ---------------------
+# OS junk
+# ---------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
