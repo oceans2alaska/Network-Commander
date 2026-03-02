@@ -34,6 +34,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.so
+.Python
 
 # Distribution / packaging
 *.egg
@@ -49,6 +51,7 @@ eggs/
 .pytest_cache/
 .coverage
 .coverage.*
+coverage.xml
 htmlcov/
 .hypothesis/
 .nox/
@@ -100,6 +103,11 @@ pip-delete-this-directory.txt
 # ---------------------
 docker-compose.override.yml
 docker-compose.*.local
+
+# ---------------------
+# Cursor / debug session logs
+# ---------------------
+.cursor/debug-*.log
 
 # ---------------------
 # OS junk

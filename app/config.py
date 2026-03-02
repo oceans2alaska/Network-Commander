@@ -35,13 +35,41 @@ class Settings(BaseModel):
         case_sensitive = False
 
 
+LOG_PATH = "/home/david/Documents/GitHub/Network-Commander/.cursor/debug-eac3fa.log"
+
+def _debug_log(msg: str, data: dict) -> None:
+    import json
+    try:
+        with open(LOG_PATH, "a") as f:
+            f.write(json.dumps({"sessionId": "eac3fa", "location": "config.py:get_settings", "message": msg, "data": data, "timestamp": __import__("time").time() * 1000}) + "\n")
+    except Exception:
+        pass
+
 @lru_cache()
 def get_settings() -> Settings:
+    # #region agent log
+    has_dotenv = os.path.exists(".env")
+    unifi_keys = [k for k in os.environ if k.startswith("UNIFI_")]
+    _debug_log("get_settings called", {"has_dotenv": has_dotenv, "unifi_env_keys": unifi_keys, "calling_Settings_with_args": False})
+    # #endregion
     # Allow loading from a .env file if present
-    if os.path.exists(".env"):
+    if has_dotenv:
         from dotenv import load_dotenv
 
         load_dotenv(override=False)
+        # #region agent log
+        unifi_keys_after = [k for k in os.environ if k.startswith("UNIFI_")]
+        _debug_log("after load_dotenv", {"unifi_env_keys": unifi_keys_after})
+        # #endregion
 
-    return Settings()  # type: ignore[arg-type]
+    # #region agent log
+    _debug_log("about to call Settings() with no arguments", {})
+    # #endregion
+    try:
+        return Settings()  # type: ignore[arg-type]
+    except Exception as e:
+        # #region agent log
+        _debug_log("Settings() validation failed", {"error_type": type(e).__name__, "error_msg": str(e)[:500]})
+        # #endregion
+        raise
 
